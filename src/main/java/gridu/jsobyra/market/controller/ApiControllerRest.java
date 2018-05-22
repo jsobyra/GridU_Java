@@ -6,21 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
 public class ApiControllerRest {
-    @Resource
     private Cart cart;
     private UserService userService;
     private ItemService itemService;
 
     @Autowired
-    private ItemRepository itemRepository;
-
-    @Autowired
-    public ApiControllerRest(UserService userService, ItemService itemService) {
+    public ApiControllerRest(Cart cart, UserService userService, ItemService itemService) {
+        this.cart = cart;
         this.userService = userService;
         this.itemService = itemService;
     }
@@ -57,13 +53,11 @@ public class ApiControllerRest {
 
     @PostMapping("/cart")
     public String addToCart(@RequestBody CartItem cartItem) throws NotEnoughAmountOfItemInShop {
-        //cart.addItemToCart(cartItem.getId(), cartItem.getQuantity());
         return itemService.addItemToCartIfPossible(cart, cartItem).toString();
     }
 
     @PostMapping("/cart/remove")
     public String removeFromCart(@RequestParam Long itemId) throws NotEnoughAmountOfItemInShop{
-        //cart.addItemToCart(cartItem.getId(), cartItem.getQuantity());
         return itemService.removeItemFromCart(cart, itemId).toString();
     }
 

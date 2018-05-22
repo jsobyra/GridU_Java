@@ -9,7 +9,11 @@ import java.util.Map;
 @Component
 @SessionScope
 public class Cart {
-    private Map<Long, Integer> itemsInCart = new HashMap<>();
+    private Map<Long, Integer> itemsInCart;
+
+    public Cart() {
+        this.itemsInCart = new HashMap<>();
+    }
 
     public Map<Long, Integer> getItemsInCart() {
         return itemsInCart;
